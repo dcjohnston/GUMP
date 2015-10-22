@@ -369,7 +369,6 @@ class GUMP
             // for now ill leave it as is
             if (in_array('required', $rules) || isset($input[$field])) {
                 foreach ($rules as $rule) {
-                  print_r(json_encode($rules));
                     $method = null;
                     $param = null;
 
