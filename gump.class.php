@@ -1068,8 +1068,8 @@ class GUMP
      */
     protected function validate_required($field, $input, $param = null)
     {
-        if (isset($input[$field]))
-            return true;
+        if (!isset($input[$field]))
+            return false;
         }
 
         return array(
