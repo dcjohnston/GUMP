@@ -367,8 +367,9 @@ class GUMP
             // it seems like required is doing two different thing
             // its both forcing the validators to fire, and also forcing the element to be present
             // for now ill leave it as is
-            if (in_array('required', $rules) || (isset($input[$field]) && !is_array($input[$field]))) {
+            if (in_array('required', $rules) || isset($input[$field])) {
                 foreach ($rules as $rule) {
+                  print_r(json_encode($rules));
                     $method = null;
                     $param = null;
 
@@ -383,10 +384,7 @@ class GUMP
                     }
 
                     //self::$validation_methods[$rule] = $callback;
-                      print_r("callable\n");
                     if (is_callable(array($this, $method))) {
-                      print_r("callable\n");
-                      print_r($method);
                         $result = $this->$method(
                           $field, $input, $param
                         );
@@ -1068,8 +1066,8 @@ class GUMP
      */
     protected function validate_required($field, $input, $param = null)
     {
-        if (!isset($input[$field]))
-            return false;
+        if (isset($input[$field])){
+            return true;
         }
 
         return array(
