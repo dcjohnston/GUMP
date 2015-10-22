@@ -363,6 +363,10 @@ class GUMP
 
             $rules = explode('|', $rules);
 
+            // i dont like this , why only fire rules if required is present?
+            // it seems like required is doing two different thing
+            // its both forcing the validators to fire, and also forcing the element to be present
+            // for now ill leave it as is
             if (in_array('required', $rules) || (isset($input[$field]) && !is_array($input[$field]))) {
                 foreach ($rules as $rule) {
                     $method = null;
@@ -379,8 +383,10 @@ class GUMP
                     }
 
                     //self::$validation_methods[$rule] = $callback;
-
+                      print_r("callable\n");
                     if (is_callable(array($this, $method))) {
+                      print_r("callable\n");
+                      print_r($method);
                         $result = $this->$method(
                           $field, $input, $param
                         );
@@ -1062,8 +1068,8 @@ class GUMP
      */
     protected function validate_required($field, $input, $param = null)
     {
-        if (isset($input[$field]) && ($input[$field] === false || $input[$field] === 0 || $input[$field] === 0.0 || $input[$field] === '0' || is_array($input[$field])) {
-            return;
+        if (isset($input[$field]))
+            return true;
         }
 
         return array(
